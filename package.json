@@ -1,5 +1,5 @@
 {
-  "name": "gpii-test-mail",
+  "name": "gpii-mail-test",
   "version": "0.0.0",
   "description": "A fluid component that provides a SMTP server that can be used for testing purposes.",
   "main": "",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/the-t-in-rtf/gpii-test-mail"
+    "url": "https://github.com/GPII/gpii-mail-test"
   },
   "author": "Tony Atkins <tony@raisingthefloor.org>",
   "license": "See LICENSE file for details.",
