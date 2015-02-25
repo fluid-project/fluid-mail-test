@@ -35,8 +35,7 @@ gpii.test.mail.smtp.testSuite.mailTest = function(callback) {
     var timestamp = (new Date()).getTime();
     var smtpInstance = gpii.test.mail.smtp({
         "config": {
-            "port": 4026,
-            "messageFile": "/tmp/message-" + timestamp + ".txt"
+            "port": 4026
         },
         "listeners": {
             "ready": {
@@ -65,7 +64,7 @@ gpii.test.mail.smtp.testSuite.tests = {
             jqUnit.stop();
 
             // Confirm that the test content exists and is correct
-            fs.readFile(that.model.messageFile, function(err, data) {
+            fs.readFile(that.options.members.messageFile, function(err, data) {
                 jqUnit.start();
                 jqUnit.assertNull("There should be no errors:" + err, err);
                 jqUnit.assertNotNull("There should be message data returned.", data);

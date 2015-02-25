@@ -34,8 +34,7 @@ fluid.defaults("gpii.test.mail.smtp", {
         "ignoreTLS":            true,
         "disableDNSValidation": true,
         "outputDir":            "/tmp",
-        "port":                 4025,
-        "messageFile":          null
+        "port":                 4025
     },
     "components": {
         "mailServer": {
