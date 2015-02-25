@@ -42,10 +42,16 @@ fluid.defaults("gpii.test.mail.smtp", {
             "type": "gpii.test.mail.smtp.simpleSmtpServer"
         }
     },
+    "events": {
+        "ready":           null,
+        "messageReceived": null
+    },
     "listeners": {
         "onCreate": {
             "funcName": "gpii.test.mail.smtp.init",
-            "args": ["{that}"]
-        }
+            "args":     ["{that}"]
+        },
+        "{mailServer}.events.messageReceived": "{that}.events.messageReceived.fire",
+        "{mailServer}.events.ready":           "{that}.events.ready.fire"
     }
 });

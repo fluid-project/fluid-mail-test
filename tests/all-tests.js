@@ -3,7 +3,8 @@ var fluid = fluid || require('infusion');
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.testSuite");
 
-require("./harness");
+require("../src/js/mailserver.js");
+require("../src/js/simpleSmtpServer.js");
 
 var jqUnit = fluid.require("jqUnit");
 var fs     = require("fs");
@@ -29,9 +30,20 @@ gpii.test.mail.smtp.testSuite.isSaneResponse = function(error, info) {
 };
 
 gpii.test.mail.smtp.testSuite.mailTest = function(callback) {
-    var harnessInstance = gpii.test.mail.harness({});
-    harnessInstance.events.ready.addListener(function(that) {
-        callback(that);
+    fluid.registerNamespace("gpii.test.mail.smtp.testInstance");
+    gpii.test.mail.smtp.testInstance.callback = function(that){callback(that);};
+    var timestamp = (new Date()).getTime();
+    var smtpInstance = gpii.test.mail.smtp({
+        "config": {
+            "port": 4026,
+            "messageFile": "/tmp/message-" + timestamp + ".txt"
+        },
+        "listeners": {
+            "ready": {
+                "funcName": "gpii.test.mail.smtp.testInstance.callback",
+                "args": ["{that}"]
+            }
+        }
     });
 };
 
@@ -53,7 +65,7 @@ gpii.test.mail.smtp.testSuite.tests = {
             jqUnit.stop();
 
             // Confirm that the test content exists and is correct
-            fs.readFile(that.mailServer.model.messageFile, function(err, data) {
+            fs.readFile(that.model.messageFile, function(err, data) {
                 jqUnit.start();
                 jqUnit.assertNull("There should be no errors:" + err, err);
                 jqUnit.assertNotNull("There should be message data returned.", data);

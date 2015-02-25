@@ -20,7 +20,7 @@ mailServer.handleData = function (that, connection, chunk){
 mailServer.handleDataReady = function( that, connection, callback){
     connection.saveStream.end();
 
-    that.events.messageReceived.fire(connection);
+    that.events.messageReceived.fire(that, connection);
 
     callback(null, that.options.config.queueId);
 };
