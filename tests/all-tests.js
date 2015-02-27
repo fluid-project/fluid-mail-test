@@ -1,5 +1,5 @@
 "use strict";
-var fluid = fluid || require('infusion');
+var fluid = fluid || require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.testSuite");
 
@@ -15,7 +15,7 @@ gpii.test.mail.smtp.testSuite.mailOptions = {
     text:    "Test Body"
 };
 
-gpii.test.mail.smtp.testSuite.isSaneResponse = function(error, info) {
+gpii.test.mail.smtp.testSuite.isSaneResponse = function (error, info) {
     jqUnit.assertNull("There should be no mail errors", error);
 
     jqUnit.assertNotNull("There should message info returned...", info);
@@ -28,11 +28,10 @@ gpii.test.mail.smtp.testSuite.isSaneResponse = function(error, info) {
     }
 };
 
-gpii.test.mail.smtp.testSuite.mailTest = function(callback) {
+gpii.test.mail.smtp.testSuite.mailTest = function (callback) {
     fluid.registerNamespace("gpii.test.mail.smtp.testInstance");
-    gpii.test.mail.smtp.testInstance.callback = function(that){callback(that);};
-    var timestamp = (new Date()).getTime();
-    var smtpInstance = gpii.test.mail.smtp({
+    gpii.test.mail.smtp.testInstance.callback = function (that) { callback(that); };
+    gpii.test.mail.smtp({
         "config": {
             "port": 4026
         },
@@ -46,16 +45,16 @@ gpii.test.mail.smtp.testSuite.mailTest = function(callback) {
 };
 
 gpii.test.mail.smtp.testSuite.tests = {
-    "Testing default mail handling...": function(that) {
-        that.transporter.sendMail(gpii.test.mail.smtp.testSuite.mailOptions, function(error, info){
+    "Testing default mail handling...": function (that) {
+        that.transporter.sendMail(gpii.test.mail.smtp.testSuite.mailOptions, function (error, info) {
             jqUnit.start();
             gpii.test.mail.smtp.testSuite.isSaneResponse(error, info);
             that.destroy();
         });
     },
-    "Testing custom mail handling (and file storage)...": function(that) {
+    "Testing custom mail handling (and file storage)...": function (that) {
 
-        that.events.messageReceived.addListener(function(that, connection){
+        that.events.messageReceived.addListener(function (that, connection) {
             jqUnit.start();
             jqUnit.assertEquals("The sender should be correct",    gpii.test.mail.smtp.testSuite.mailOptions.from, connection.from);
             jqUnit.assertEquals("The recipient should be correct", gpii.test.mail.smtp.testSuite.mailOptions.to, connection.to[0]);
@@ -63,7 +62,7 @@ gpii.test.mail.smtp.testSuite.tests = {
             jqUnit.stop();
 
             // Confirm that the test content exists and is correct
-            fs.readFile(that.options.messageFile, function(err, data) {
+            fs.readFile(that.options.messageFile, function (err, data) {
                 jqUnit.start();
                 jqUnit.assertNull("There should be no errors:" + err, err);
                 jqUnit.assertNotNull("There should be message data returned.", data);
@@ -75,7 +74,7 @@ gpii.test.mail.smtp.testSuite.tests = {
             });
         });
 
-        that.transporter.sendMail(gpii.test.mail.smtp.testSuite.mailOptions, function(error, info){
+        that.transporter.sendMail(gpii.test.mail.smtp.testSuite.mailOptions, function (error, info) {
             jqUnit.start();
             gpii.test.mail.smtp.testSuite.isSaneResponse(error, info);
             that.destroy();
@@ -84,10 +83,10 @@ gpii.test.mail.smtp.testSuite.tests = {
     }
 };
 
-gpii.test.mail.smtp.testSuite.runTests = function() {
-    Object.keys(gpii.test.mail.smtp.testSuite.tests).forEach(function(label){
-      var testFunc = gpii.test.mail.smtp.testSuite.tests[label];
-        jqUnit.asyncTest(label, function() {
+gpii.test.mail.smtp.testSuite.runTests = function () {
+    Object.keys(gpii.test.mail.smtp.testSuite.tests).forEach(function (label) {
+        var testFunc = gpii.test.mail.smtp.testSuite.tests[label];
+        jqUnit.asyncTest(label, function () {
             gpii.test.mail.smtp.testSuite.mailTest(testFunc);
         });
     });
