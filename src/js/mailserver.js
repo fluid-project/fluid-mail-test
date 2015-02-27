@@ -7,16 +7,15 @@
 // You can plug in your own tests to be run on individual messages by replacing the mailHandler component with your own implementation.
 //
 // For specific examples, look at the tests in this project.
-
 "use strict";
-var fluid         = fluid || require("infusion");
-var gpii          = fluid.registerNamespace("gpii");
-var mailServer    = fluid.registerNamespace("gpii.test.mail.smtp");
+var fluid = fluid || require("infusion");
+var gpii  = fluid.registerNamespace("gpii");
+fluid.registerNamespace("gpii.test.mail.smtp");
 
 var nodemailer    = require("nodemailer");
-var smtpTransport = require('nodemailer-smtp-transport');
+var smtpTransport = require("nodemailer-smtp-transport");
 
-mailServer.init = function(that) {
+gpii.test.mail.smtp.init = function (that) {
     var options = {
         secure:    false,
         port:      that.options.config.port,

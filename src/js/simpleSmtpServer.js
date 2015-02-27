@@ -1,23 +1,23 @@
 // A module to wire in simplesmtp to handle incoming messages.
 "use strict";
-var fluid      = fluid || require("infusion");
-var gpii       = fluid.registerNamespace("gpii");
-var mailServer = fluid.registerNamespace("gpii.test.mail.smtp.simpleSmtpServer");
+var fluid = fluid || require("infusion");
+var gpii  = fluid.registerNamespace("gpii");
+fluid.registerNamespace("gpii.test.mail.smtp.simpleSmtpServer");
 
 var simplesmtp = require("simplesmtp");
 var fs         = require("fs");
 
-mailServer.handleStartData = function (that, connection){
+gpii.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
     var timestamp = (new Date()).getTime();
     that.options.messageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
     connection.saveStream = fs.createWriteStream(that.options.messageFile);
 };
 
-mailServer.handleData = function (that, connection, chunk){
+gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
     connection.saveStream.write(chunk);
 };
 
-mailServer.handleDataReady = function( that, connection, callback){
+gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
     connection.saveStream.end();
 
     that.events.messageReceived.fire(that, connection);
@@ -25,7 +25,7 @@ mailServer.handleDataReady = function( that, connection, callback){
     callback(null, that.options.config.queueId);
 };
 
-mailServer.init = function (that) {
+gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
     that.simplesmtp = simplesmtp.createServer(that.options.config);
 
     that.simplesmtp.on("startData", that.handleStartData);
@@ -33,14 +33,14 @@ mailServer.init = function (that) {
     that.simplesmtp.on("dataReady", that.handleDataReady);
 
     console.log("Starting test mail server on port " + that.options.config.port + "....");
-    that.simplesmtp.listen(that.options.config.port, function() {
+    that.simplesmtp.listen(that.options.config.port, function () {
         that.events.ready.fire(that);
     });
 };
 
-mailServer.stop = function(that) {
+gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
     try {
-        that.simplesmtp.end(function() {
+        that.simplesmtp.end(function () {
             console.log("Stopped mail server...");
         });
     }
