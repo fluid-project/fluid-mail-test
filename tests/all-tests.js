@@ -3,8 +3,7 @@ var fluid = fluid || require('infusion');
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.testSuite");
 
-require("../src/js/mailserver.js");
-require("../src/js/simpleSmtpServer.js");
+require("../src/js/index.js");
 
 var jqUnit = fluid.require("jqUnit");
 var fs     = require("fs");
