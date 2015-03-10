@@ -16,24 +16,24 @@ var nodemailer    = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 
 gpii.test.mail.smtp.init = function (that) {
-    var options = {
-        secure:    false,
-        port:      that.options.config.port,
-        ignoreTLS: true
-    };
-
-    that.transporter   = nodemailer.createTransport(smtpTransport(options));
+    that.transporter   = nodemailer.createTransport(smtpTransport(that.options.config.transport));
 };
 
 fluid.defaults("gpii.test.mail.smtp", {
     gradeNames: ["fluid.standardRelayComponent", "autoInit"],
     "config": {
-        "SMTPBanner":           "Test Mail Server",
-        "queueID":              "TESTMAIL",
-        "ignoreTLS":            true,
-        "disableDNSValidation": true,
-        "outputDir":            "/tmp",
-        "port":                 4025
+        "simpleSmtp": {
+            "SMTPBanner":           "Test Mail Server",
+            "queueID":              "TESTMAIL",
+            "disableDNSValidation": true,
+            "outputDir":            "/tmp",
+            "port":                 4025
+        },
+        "transport": {
+            "ignoreTLS":            true,
+            "secure":               false,
+            "port":                 4025
+        }
     },
     "components": {
         "mailServer": {

@@ -3,7 +3,7 @@ var fluid = fluid || require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.testSuite");
 
-require("../src/js/index.js");
+require("../index.js");
 
 var jqUnit = fluid.require("jqUnit");
 var fs     = require("fs");
@@ -19,13 +19,11 @@ gpii.test.mail.smtp.testSuite.isSaneResponse = function (error, info) {
     jqUnit.assertNull("There should be no mail errors", error);
 
     jqUnit.assertNotNull("There should message info returned...", info);
-    if (info) {
-        jqUnit.assertNotNull("There should be a message ID", info.messageId);
-        jqUnit.assertEquals("There should be an accepted message...", 1, info.accepted.length);
-        jqUnit.assertEquals("There should be no rejected messages...", 0, info.rejected.length);
-        jqUnit.assertEquals("The sender should be correct", gpii.test.mail.smtp.testSuite.mailOptions.from, info.envelope.from);
-        jqUnit.assertEquals("The recipient should be correct", gpii.test.mail.smtp.testSuite.mailOptions.to, info.envelope.to[0]);
-    }
+    jqUnit.assertNotNull("There should be a message ID", info.messageId);
+    jqUnit.assertEquals("There should be an accepted message...", 1, info.accepted.length);
+    jqUnit.assertEquals("There should be no rejected messages...", 0, info.rejected.length);
+    jqUnit.assertEquals("The sender should be correct", gpii.test.mail.smtp.testSuite.mailOptions.from, info.envelope.from);
+    jqUnit.assertEquals("The recipient should be correct", gpii.test.mail.smtp.testSuite.mailOptions.to, info.envelope.to[0]);
 };
 
 gpii.test.mail.smtp.testSuite.mailTest = function (callback) {
