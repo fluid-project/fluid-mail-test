@@ -28,9 +28,6 @@ gpii.test.mail.smtp.testSuite.isSaneResponse = function (error, info) {
 
 gpii.test.mail.smtp.testSuite.mailTest = function (funcName) {
     gpii.test.mail.smtp({
-        "config": {
-            "port": 4026
-        },
         "listeners": {
             "ready": {
                 "funcName": funcName,
