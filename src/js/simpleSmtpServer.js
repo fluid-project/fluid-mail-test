@@ -9,8 +9,8 @@ var fs         = require("fs");
 
 gpii.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
     var timestamp = (new Date()).getTime();
-    that.options.messageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
-    connection.saveStream = fs.createWriteStream(that.options.messageFile);
+    that.messageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
+    connection.saveStream = fs.createWriteStream(that.messageFile);
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
@@ -52,7 +52,9 @@ gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
 fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
     gradeNames: ["fluid.standardRelayComponent", "autoInit"],
     "config": "{gpii.test.mail.smtp}.options.simpleSmtp",
-    "messageFile": null,
+    "members": {
+        "messageFile": null
+    },
     "invokers": {
         "handleStartData": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleStartData",

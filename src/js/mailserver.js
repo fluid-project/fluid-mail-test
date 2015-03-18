@@ -22,32 +22,35 @@ gpii.test.mail.smtp.init = function (that) {
 
 fluid.defaults("gpii.test.mail.smtp", {
     gradeNames: ["fluid.standardRelayComponent", "autoInit"],
-    "port": 4025,
-    "simpleSmtp": {
-        "SMTPBanner":           "Test Mail Server",
-        "queueID":              "TESTMAIL",
-        "disableDNSValidation": true,
-        "outputDir":            os.tmpdir(),
-        "port":                 "{that}.options.port"
+    members: {
+        transporter: null
     },
-    "transport": {
-        "ignoreTLS":            true,
-        "secure":               false,
-        "port":                 "{that}.options.port"
+    port: 4025,
+    simpleSmtp: {
+        SMTPBanner:           "Test Mail Server",
+        queueID:              "TESTMAIL",
+        disableDNSValidation: true,
+        outputDir:            os.tmpdir(),
+        port:                 "{that}.options.port"
     },
-    "components": {
-        "mailServer": {
-            "type": "gpii.test.mail.smtp.simpleSmtpServer"
+    transport: {
+        ignoreTLS:            true,
+        secure:               false,
+        port:                 "{that}.options.port"
+    },
+    components: {
+        mailServer: {
+            type: "gpii.test.mail.smtp.simpleSmtpServer"
         }
     },
-    "events": {
-        "ready":           null,
-        "messageReceived": null
+    events: {
+        ready:           null,
+        messageReceived: null
     },
-    "listeners": {
-        "onCreate": {
-            "funcName": "gpii.test.mail.smtp.init",
-            "args":     ["{that}"]
+    listeners: {
+        onCreate: {
+            funcName: "gpii.test.mail.smtp.init",
+            args:     ["{that}"]
         },
         "{mailServer}.events.messageReceived": "{that}.events.messageReceived.fire",
         "{mailServer}.events.ready":           "{that}.events.ready.fire"
