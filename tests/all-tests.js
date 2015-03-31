@@ -55,7 +55,7 @@ gpii.test.mail.smtp.testSuite.testCustomMailHandling = function (that) {
         jqUnit.stop();
 
         // Confirm that the test content exists and is correct
-        fs.readFile(that.messageFile, function (err, data) {
+        fs.readFile(that.currentMessageFile, function (err, data) {
             jqUnit.start();
             jqUnit.assertNull("There should be no errors:" + err, err);
             jqUnit.assertNotNull("There should be message data returned.", data);
