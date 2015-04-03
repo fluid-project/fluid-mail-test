@@ -81,6 +81,10 @@ fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
         "onDestroy.stop": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.stop",
             "args": ["{that}"]
+        },
+        "ready.log": {
+            "funcName": "console.log",
+            args: ["Mail server ready..."]
         }
     }
 });
