@@ -32,7 +32,7 @@ gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
     that.simplesmtp.on("data",      that.handleData);
     that.simplesmtp.on("dataReady", that.handleDataReady);
 
-    console.log("Starting test mail server on port " + that.options.config.port + "....");
+    fluid.log("Starting test mail server on port " + that.options.config.port + "....");
     that.simplesmtp.listen(that.options.config.port, function () {
         that.events.ready.fire(that);
     });
@@ -41,11 +41,11 @@ gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
 gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
     try {
         that.simplesmtp.end(function () {
-            console.log("Stopped mail server...");
+            fluid.log("Stopped mail server...");
         });
     }
     catch (e) {
-        console.log("The SMTP server thinks it was already stopped.  I don't care as long as it's no longer running.");
+        fluid.log("The SMTP server thinks it was already stopped.  I don't care as long as it's no longer running.");
     }
 };
 
@@ -83,7 +83,7 @@ fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
             "args": ["{that}"]
         },
         "ready.log": {
-            "funcName": "console.log",
+            "funcName": "fluid.log",
             args: ["Mail server ready..."]
         }
     }
