@@ -6,7 +6,7 @@
   "license": "BSD-3-Clause",
   "main": "",
   "scripts": {
-    "test":        "src/tests/js/all-tests.js",
+    "test":        "node tests/all-tests.js",
     "postinstall": "grunt dedupe-infusion"
   },
   "repository": {
@@ -19,12 +19,12 @@
     "grunt-contrib-jshint":      "~0.9.0",
     "grunt-jsonlint":            "1.0.4",
     "grunt-gpii":                "git://github.com/GPII/grunt-gpii.git#58ae055833f437a9e91baedb9f39a22c5fdd727f",
-    "infusion":                  "git://github.com/fluid-project/infusion.git#605b0bcfaedf6193c31456236d3aa4e42cf36a96",
+    "infusion":                  "git://github.com/fluid-project/infusion.git#282f1a318718eed0b0ec060fb8b4ad254417fd7e",
     "nodemailer":                "^1.3.0",
     "nodemailer-smtp-transport": "^0.1.13",
     "simplesmtp":                "^0.3.34"
   },
   "devDependencies": {
-    "jqUnit":               "git://github.com/fluid-project/node-jqUnit.git#e9bf72445bd343a4f3aabe3ba96a1087d3498612"
+    "jqUnit":     "git://github.com/fluid-project/node-jqUnit.git#b7ef53aac1ca365bf23d35d255fae874faa88b70"
   }
 }

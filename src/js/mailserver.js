@@ -21,7 +21,7 @@ gpii.test.mail.smtp.init = function (that) {
 };
 
 fluid.defaults("gpii.test.mail.smtp", {
-    gradeNames: ["fluid.standardRelayComponent", "autoInit"],
+    gradeNames: ["fluid.modelComponent"],
     members: {
         transporter: null
     },
