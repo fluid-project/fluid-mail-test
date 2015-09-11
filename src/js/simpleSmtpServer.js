@@ -50,7 +50,7 @@ gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
 };
 
 fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
-    gradeNames: ["fluid.standardRelayComponent", "autoInit"],
+    gradeNames: ["fluid.modelComponent"],
     "config": "{gpii.test.mail.smtp}.options.simpleSmtp",
     "members": {
         "currentMessageFile": null
