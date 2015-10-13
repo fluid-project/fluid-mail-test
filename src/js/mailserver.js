@@ -9,50 +9,45 @@
 // For specific examples, look at the tests in this project.
 "use strict";
 var fluid = fluid || require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp");
 
-var nodemailer    = require("nodemailer");
-var smtpTransport = require("nodemailer-smtp-transport");
 var os            = require("os");
 
-gpii.test.mail.smtp.init = function (that) {
-    that.transporter   = nodemailer.createTransport(smtpTransport(that.options.transport));
-};
-
 fluid.defaults("gpii.test.mail.smtp", {
-    gradeNames: ["fluid.modelComponent"],
-    members: {
-        transporter: null
-    },
+    gradeNames: ["fluid.component"],
     port: 4025,
     simpleSmtp: {
         SMTPBanner:           "Test Mail Server",
         queueID:              "TESTMAIL",
+        logger:               false,
         disableDNSValidation: true,
+        disabledCommands:     ["AUTH"],
         outputDir:            os.tmpdir(),
-        port:                 "{that}.options.port"
-    },
-    transport: {
-        ignoreTLS:            true,
-        secure:               false,
         port:                 "{that}.options.port"
     },
     components: {
         mailServer: {
-            type: "gpii.test.mail.smtp.simpleSmtpServer"
+            type: "gpii.test.mail.smtp.simpleSmtpServer",
+            options: {
+                listeners: {
+                    onMessageReceived: {
+                        func: "{gpii.test.mail.smtp}.events.onMessageReceived.fire"
+                    },
+                    onReady: {
+                        func: "{gpii.test.mail.smtp}.events.onReady.fire"
+                    },
+                    onError: {
+                        func: "{gpii.test.mail.smtp}.events.onError.fire"
+                    }
+                }
+            }
         }
     },
     events: {
-        ready:           null,
-        messageReceived: null
+        onReady:           null,
+        onError:           null,
+        onMessageReceived: null
     },
     listeners: {
-        onCreate: {
-            funcName: "gpii.test.mail.smtp.init",
-            args:     ["{that}"]
-        },
-        "{mailServer}.events.messageReceived": "{that}.events.messageReceived.fire",
-        "{mailServer}.events.ready":           "{that}.events.ready.fire"
     }
 });

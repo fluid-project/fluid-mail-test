@@ -4,37 +4,47 @@ var fluid = fluid || require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.simpleSmtpServer");
 
-var simplesmtp = require("simplesmtp");
+var SMTPServer = require("smtp-server").SMTPServer;
+
 var fs         = require("fs");
 
-gpii.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
+gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, stream, session, callback) {
     var timestamp = (new Date()).getTime();
     that.currentMessageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
-    connection.saveStream = fs.createWriteStream(that.currentMessageFile);
+
+    var messageFileStream = fs.createWriteStream(that.currentMessageFile);
+    stream.pipe(messageFileStream);
+
+    stream.on("end", function () {
+        that.events.onMessageReceived.fire(that, session);
+        if (callback) {
+            callback();
+        }
+    });
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
-    connection.saveStream.write(chunk);
+gpii.test.mail.smtp.simpleSmtpServer.handleError = function (that, error) {
+    that.events.onError.fire(that, error);
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
-    connection.saveStream.end();
-
-    that.events.messageReceived.fire(that, connection);
-
-    callback(null, that.options.config.queueId);
+// Accept mail for any recipient if `options.allowAllRecipients` is truthy.
+gpii.test.mail.smtp.simpleSmtpServer.allowAllRecipients = function (that, address, session, done) {
+    done();
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
-    that.simplesmtp = simplesmtp.createServer(that.options.config);
+    var serverOptions = fluid.copy(that.options.config);
+    serverOptions.onData = that.handleData;
+    if (that.options.allowAllRecipients) {
+        serverOptions.onRcptTo = that.allowAllRecipients;
+    }
 
-    that.simplesmtp.on("startData", that.handleStartData);
-    that.simplesmtp.on("data",      that.handleData);
-    that.simplesmtp.on("dataReady", that.handleDataReady);
+    that.simplesmtp = new SMTPServer(serverOptions);
+    that.simplesmtp.on("error", that.handleError);
 
     fluid.log("Starting test mail server on port " + that.options.config.port + "....");
     that.simplesmtp.listen(that.options.config.port, function () {
-        that.events.ready.fire(that);
+        that.events.onReady.fire(that);
     });
 };
 
@@ -52,26 +62,28 @@ gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
 fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
     gradeNames: ["fluid.modelComponent"],
     "config": "{gpii.test.mail.smtp}.options.simpleSmtp",
+    allowAllRecipients: true,
     "members": {
         "currentMessageFile": null
     },
     "invokers": {
-        "handleStartData": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleStartData",
-            "args": ["{that}", "{arguments}.0"]
+        "allowAllRecipients": {
+            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.allowAllRecipients",
+            "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
         "handleData": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleData",
             "args": ["{that}", "{arguments}.0", "{arguments}.1"]
         },
-        "handleDataReady": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleDataReady",
-            "args": ["{that}", "{arguments}.0", "{arguments}.1"]
+        "handleError": {
+            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleError",
+            "args": ["{that}", "{arguments}.0"]
         }
     },
     "events": {
-        "messageReceived": null,
-        "ready":           null
+        "onMessageReceived": null,
+        "onReady":           null,
+        "onError":           null
     },
     "listeners": {
         "onCreate.init": {
@@ -82,7 +94,7 @@ fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.stop",
             "args": ["{that}"]
         },
-        "ready.log": {
+        "onReady.log": {
             "funcName": "fluid.log",
             args: ["Mail server ready..."]
         }
