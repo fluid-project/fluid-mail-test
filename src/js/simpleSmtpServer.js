@@ -73,7 +73,7 @@ fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
         },
         "handleData": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleData",
-            "args": ["{that}", "{arguments}.0", "{arguments}.1"]
+            "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
         "handleError": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleError",
