@@ -11,15 +11,12 @@ var fs         = require("fs");
 gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, stream, session, callback) {
     var timestamp = (new Date()).getTime();
     that.currentMessageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
-
     var messageFileStream = fs.createWriteStream(that.currentMessageFile);
     stream.pipe(messageFileStream);
 
     stream.on("end", function () {
         that.events.onMessageReceived.fire(that, session);
-        if (callback) {
-            callback();
-        }
+        callback();
     });
 };
 
@@ -48,14 +45,15 @@ gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
     });
 };
 
+// Shut down the mail server when the component is destroyed.
 gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
     try {
-        that.simplesmtp.end(function () {
+        that.simplesmtp.close(function () {
             fluid.log("Stopped mail server...");
         });
     }
     catch (e) {
-        fluid.log("The SMTP server thinks it was already stopped.  I don't care as long as it's no longer running.");
+        fluid.fail("An error occurred while attempting to stop the mail server...", e);
     }
 };
 

@@ -8,18 +8,27 @@ fluid.registerNamespace("gpii.test.mail.caseholder");
 var jqUnit = require("jqUnit");
 var fs     = require("fs");
 
-gpii.test.mail.caseholder.verifyMessage = function (that, session, expected, messageFile) {
+gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
+    jqUnit.assertTrue("The message should have been accepted...", info.accepted.length > 0);
+    jqUnit.assertFalse("The message should not been rejected...", info.rejected.length > 0);
 
-    jqUnit.assertEquals("The sender should be correct", expected.from, session.envelope.mailFrom.address);
-    jqUnit.assertEquals("The recipient should be correct", expected.to, session.envelope.rcptTo[0].address);
+    jqUnit.assertTrue("There should be a message ID...", info.messageId);
 
-    if (messageFile) {
-        // Confirm that the test content exists and is correct
-        var messageBody = fs.readFileSync(messageFile, "utf8");
-        jqUnit.assertTrue("There should be a message ID", messageBody.indexOf("Message-Id") !== -1);
-        jqUnit.assertTrue("The subject data should be in the message.", messageBody.indexOf(expected.subject) !== -1);
-        jqUnit.assertTrue("The message text should be in the message.", messageBody.indexOf(expected.text) !== -1);
-    }
+    jqUnit.assertEquals("The sender should be correct", expected.from, info.envelope.from);
+    jqUnit.assertEquals("The recipient should be correct", expected.to, info.envelope.to[0]);
+};
+
+gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) {
+    var messageFile = testEnvironment.smtpServer.mailServer.currentMessageFile;
+    var messageBody = fs.readFileSync(messageFile, "utf8");
+
+    var testFields = ["subject", "html", "text"];
+    fluid.each(testFields, function (field) {
+        var expectedValue = expected[field];
+        if (expectedValue) {
+            jqUnit.assertTrue("The message should contain data that matches the expected '" + field + "' field...", messageBody.indexOf(expectedValue) !== -1);
+        }
+    });
 };
 
 // Copied from a similar utility grade in `gpii.express`.
