@@ -33,17 +33,6 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
                             func: "{mailer}.sendMessage",
                             args: ["{that}.options.messages.basic"]
                         },
-                        // These checks must be executed in this order or the test harness will kill anything it
-                        // thinks is no longer needed without waiting for it to finish its work.  This results in errors
-                        // related to the mailer's "success" handler being called after it has been destroyed.
-                        //
-                        // TODO:  Review with Antranig
-                        //
-                        // listen for the mail server to process the message and check the message body
-                        {
-                            listener: "fluid.identity",
-                            event: "{testEnvironment}.smtpServer.events.onMessageReceived"
-                        },
                         // listen for receipt and check validity of message info.
                         {
                             listener: "gpii.test.mail.caseholder.verifyMailInfo",
@@ -61,19 +50,16 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
                             func: "{mailer}.sendMessage",
                             args: ["{that}.options.messages.basic"]
                         },
-                        // These checks must be executed in this order or the test harness will kill anything it
-                        // thinks is no longer needed without waiting for it to finish its work.  This results in errors
-                        // related to the mailer's "success" handler being called after it has been destroyed.
-                        //
-                        // TODO:  Review with Antranig
-                        //
                         // listen for the mail server to process the message and check the message body
                         {
                             listener: "gpii.test.mail.caseholder.verifyMailBody",
                             event: "{testEnvironment}.smtpServer.events.onMessageReceived",
                             args: ["{testEnvironment}", "{that}.options.messages.basic"]
                         },
-                        // listen for receipt and check validity of message info.
+                        // This dummy check must be here or the mailer will be destroyed before its handler has been
+                        // allowed to do its job, which will result in a `fluid.fail` that breaks the test.
+                        //
+                        // TODO:  Review with Antranig
                         {
                             listener: "fluid.identity",
                             event: "{mailer}.events.onSuccess"
