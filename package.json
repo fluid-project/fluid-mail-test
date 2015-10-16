@@ -22,7 +22,7 @@
     "infusion": "git://github.com/fluid-project/infusion.git#a1e3d601478e57276d4143fca5bcbe00f9c6b0cd",
     "nodemailer": "1.3.0",
     "nodemailer-smtp-transport": "0.1.13",
-    "smtp-server": "1.6.0"
+    "simplesmtp": "^0.3.34"
   },
   "devDependencies": {
     "jqUnit": "git://github.com/fluid-project/node-jqUnit.git#d46bb932fa4069770852c51a92182939958f2d75",
