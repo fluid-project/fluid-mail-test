@@ -58,8 +58,6 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
                         },
                         // This dummy check must be here or the mailer will be destroyed before its handler has been
                         // allowed to do its job, which will result in a `fluid.fail` that breaks the test.
-                        //
-                        // TODO:  Review with Antranig
                         {
                             listener: "fluid.identity",
                             event: "{mailer}.events.onSuccess"
