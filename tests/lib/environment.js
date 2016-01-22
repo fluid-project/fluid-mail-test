@@ -8,7 +8,7 @@
 
 */
 "use strict";
-var fluid        = fluid || require("infusion");
+var fluid        = require("infusion");
 
 fluid.defaults("gpii.test.mail.environment", {
     gradeNames: ["fluid.test.testEnvironment"],

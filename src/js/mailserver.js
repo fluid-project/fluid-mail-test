@@ -8,7 +8,7 @@
 //
 // For specific examples, look at the tests in this project.
 "use strict";
-var fluid = fluid || require("infusion");
+var fluid = require("infusion");
 fluid.registerNamespace("gpii.test.mail.smtp");
 
 var os            = require("os");

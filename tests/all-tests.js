@@ -1,7 +1,7 @@
 // Tests for the `gpii-mail-test` server, which allows receiving and inspection of outgoing messages.
 //
 "use strict";
-var fluid = fluid || require("infusion");
+var fluid = require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.tests.all");
 
