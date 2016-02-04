@@ -1,43 +1,37 @@
 // A module to wire in simplesmtp to handle incoming messages.
 "use strict";
-var fluid = fluid || require("infusion");
+var fluid = require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.smtp.simpleSmtpServer");
 
-var SMTPServer = require("smtp-server").SMTPServer;
+var simplesmtp = require("simplesmtp");
 
 var fs         = require("fs");
 
-gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, stream, session, callback) {
+gpii.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
     var timestamp = (new Date()).getTime();
     that.currentMessageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
-    var messageFileStream = fs.createWriteStream(that.currentMessageFile);
-    stream.pipe(messageFileStream);
-
-    stream.on("end", function () {
-        that.events.onMessageReceived.fire(that, session);
-        callback();
-    });
+    connection.saveStream = fs.createWriteStream(that.currentMessageFile);
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.handleError = function (that, error) {
-    that.events.onError.fire(that, error);
+gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
+    connection.saveStream.write(chunk);
 };
 
-// Accept mail for any recipient if `options.allowAllRecipients` is truthy.
-gpii.test.mail.smtp.simpleSmtpServer.allowAllRecipients = function (that, address, session, done) {
-    done();
+gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
+    connection.saveStream.end();
+
+    that.events.onMessageReceived.fire(that, connection);
+
+    callback(null, that.options.config.queueId);
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
-    var serverOptions = fluid.copy(that.options.config);
-    serverOptions.onData = that.handleData;
-    if (that.options.allowAllRecipients) {
-        serverOptions.onRcptTo = that.allowAllRecipients;
-    }
+    that.simplesmtp = simplesmtp.createServer(that.options.config);
 
-    that.simplesmtp = new SMTPServer(serverOptions);
-    that.simplesmtp.on("error", that.handleError);
+    that.simplesmtp.on("startData", that.handleStartData);
+    that.simplesmtp.on("data",      that.handleData);
+    that.simplesmtp.on("dataReady", that.handleDataReady);
 
     fluid.log("Starting test mail server on port " + that.options.config.port + "....");
     that.simplesmtp.listen(that.options.config.port, function () {
@@ -45,37 +39,36 @@ gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
     });
 };
 
-// Shut down the mail server when the component is destroyed.
 gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
     try {
-        that.simplesmtp.close(function () {
+        that.simplesmtp.end(function () {
             fluid.log("Stopped mail server...");
         });
     }
     catch (e) {
-        fluid.fail("An error occurred while attempting to stop the mail server...", e);
+        fluid.log("An error occurred while trying to stop the mail server:", e);
     }
 };
+
 
 fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
     gradeNames: ["fluid.modelComponent"],
     "config": "{gpii.test.mail.smtp}.options.simpleSmtp",
-    allowAllRecipients: true,
     "members": {
         "currentMessageFile": null
     },
     "invokers": {
-        "allowAllRecipients": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.allowAllRecipients",
+        "handleStartData": {
+            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleStartData",
             "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
         "handleData": {
             "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleData",
             "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
-        "handleError": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleError",
-            "args": ["{that}", "{arguments}.0"]
+        "handleDataReady": {
+            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleDataReady",
+            "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         }
     },
     "events": {

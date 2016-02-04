@@ -1,11 +1,11 @@
 // Caseholder for easy reuse in mail tests.
 "use strict";
 
-var fluid = fluid || require("infusion");
+var fluid = require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.caseholder");
 
-var jqUnit = require("jqUnit");
+var jqUnit = require("node-jqunit");
 var fs     = require("fs");
 
 gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
