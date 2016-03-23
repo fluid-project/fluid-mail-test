@@ -16,7 +16,7 @@
     "infusion": "2.0.0-dev.20151211T025229Z.eabb4fc",
     "nodemailer": "1.3.0",
     "nodemailer-smtp-transport": "0.1.13",
-    "simplesmtp": "^0.3.34"
+    "simplesmtp": "0.3.34"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
