@@ -35,10 +35,49 @@ gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) 
     });
 };
 
+fluid.registerNamespace("gpii.test.mail.caseholder");
+gpii.test.mail.caseholder.generateTestTaggingFunction = function (index) {
+    return function (rawTestSpec) {
+        var taggedTestSpec = fluid.copy(rawTestSpec);
+        if (taggedTestSpec.tests) {
+            taggedTestSpec.tests = taggedTestSpec.tests.map(gpii.test.mail.caseholder.generateTestSequenceTaggingFunction(index));
+        }
+        return taggedTestSpec;
+    };
+};
+
+gpii.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index) {
+    return function (rawTestSequence) {
+        var taggedTestSequence = fluid.copy(rawTestSequence);
+        if (taggedTestSequence.name) {
+            taggedTestSequence.name += " (iteration #" + index + ")";
+        }
+        return taggedTestSequence;
+    };
+};
+
+/*
+
+    Take our tests and make sure that:
+
+    1. They each have our "start" and "end" sequences appended.
+    2. They are run options.iterations times.
+    3. Each iteration is tagged with the iteration number, so that we can tell where we are in the overall pass.
+
+ */
+gpii.test.mail.caseholder.cloneTestSequences = function (that, rawTests) {
+    var generatedTests = [];
+    for (var a = 1; a < that.options.iterations + 1; a++) {
+        var rawIterationTests = gpii.express.tests.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
+        var taggedIterationTests = rawIterationTests.map(gpii.test.mail.caseholder.generateTestTaggingFunction(a));
+        generatedTests = generatedTests.concat(taggedIterationTests);
+    }
+    return generatedTests;
+};
+
 fluid.defaults("gpii.test.mail.caseholder", {
     gradeNames: ["gpii.express.tests.caseHolder.base"],
-    // Although our initial sequences are currently the same as those used in the `gpii.express` test fixtures, we have
-    // our own copy to avoid unexpected side effects as `gpii-express` changes.
+    iterations : 1,
     sequenceStart: [
         {
             func: "{testEnvironment}.events.constructServer.fire"
@@ -47,5 +86,9 @@ fluid.defaults("gpii.test.mail.caseholder", {
             listener: "fluid.identity",
             event: "{testEnvironment}.events.onReady"
         }
-    ]
+    ],
+    moduleSource: {
+        funcName: "gpii.test.mail.caseholder.cloneTestSequences",
+        args:     ["{that}", "{that}.options.rawModules"]
+    }
 });
