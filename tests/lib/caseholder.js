@@ -8,6 +8,10 @@ fluid.registerNamespace("gpii.test.mail.caseholder");
 var jqUnit = require("node-jqunit");
 var fs     = require("fs");
 
+// We use the "sequence wiring" infrastructure from `gpii-express`.
+require("gpii-express");
+gpii.express.loadTestingSupport();
+
 gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
     jqUnit.assertTrue("The message should have been accepted...", info.accepted.length > 0);
     jqUnit.assertFalse("The message should not been rejected...", info.rejected.length > 0);
@@ -31,39 +35,17 @@ gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) 
     });
 };
 
-// Copied from a similar utility grade in `gpii.express`.
-gpii.test.mail.caseholder.addRequiredSequences = function (sequenceStart, rawTests) {
-    var completeTests = fluid.copy(rawTests);
-
-    for (var a = 0; a < completeTests.length; a++) {
-        var testSuite = completeTests[a];
-        for (var b = 0; b < testSuite.tests.length; b++) {
-            var tests = testSuite.tests[b];
-            var modifiedSequence = sequenceStart.concat(tests.sequence);
-            tests.sequence = modifiedSequence;
-        }
-    }
-
-    return completeTests;
-};
-
 fluid.defaults("gpii.test.mail.caseholder", {
-    gradeNames: ["fluid.test.testCaseHolder"],
-    mergePolicy: {
-        rawModules:    "noexpand",
-        sequenceStart: "noexpand"
-    },
+    gradeNames: ["gpii.express.tests.caseHolder.base"],
+    // Although our initial sequences are currently the same as those used in the `gpii.express` test fixtures, we have
+    // our own copy to avoid unexpected side effects as `gpii-express` changes.
     sequenceStart: [
-        { // This sequence point is required because of a QUnit bug - it defers the start of sequence by 13ms "to avoid any current callbacks" in its words
+        {
             func: "{testEnvironment}.events.constructServer.fire"
         },
         {
             listener: "fluid.identity",
             event: "{testEnvironment}.events.onReady"
         }
-    ],
-    moduleSource: {
-        funcName: "gpii.test.mail.caseholder.addRequiredSequences",
-        args:     ["{that}.options.sequenceStart", "{that}.options.rawModules"]
-    }
+    ]
 });
