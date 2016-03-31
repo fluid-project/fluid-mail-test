@@ -10,7 +10,7 @@ gpii.mail.test.loadTestingSupport();
 
 fluid.defaults("gpii.test.mail.tests.all.caseholder", {
     gradeNames: ["gpii.test.mail.caseholder"],
-    iterations: 25,
+    iterations: 100,
     messages: {
         basic: {
             from:    "sender@localhost",
