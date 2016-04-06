@@ -8,6 +8,10 @@ fluid.registerNamespace("gpii.test.mail.caseholder");
 var jqUnit = require("node-jqunit");
 var fs     = require("fs");
 
+// We use the "sequence wiring" infrastructure from `gpii-express`.
+require("gpii-express");
+gpii.express.loadTestingSupport();
+
 gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
     jqUnit.assertTrue("The message should have been accepted...", info.accepted.length > 0);
     jqUnit.assertFalse("The message should not been rejected...", info.rejected.length > 0);
@@ -31,30 +35,51 @@ gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) 
     });
 };
 
-// Copied from a similar utility grade in `gpii.express`.
-gpii.test.mail.caseholder.addRequiredSequences = function (sequenceStart, rawTests) {
-    var completeTests = fluid.copy(rawTests);
-
-    for (var a = 0; a < completeTests.length; a++) {
-        var testSuite = completeTests[a];
-        for (var b = 0; b < testSuite.tests.length; b++) {
-            var tests = testSuite.tests[b];
-            var modifiedSequence = sequenceStart.concat(tests.sequence);
-            tests.sequence = modifiedSequence;
+fluid.registerNamespace("gpii.test.mail.caseholder");
+gpii.test.mail.caseholder.generateTestTaggingFunction = function (index) {
+    return function (rawTestSpec) {
+        var taggedTestSpec = fluid.copy(rawTestSpec);
+        if (taggedTestSpec.tests) {
+            taggedTestSpec.tests = taggedTestSpec.tests.map(gpii.test.mail.caseholder.generateTestSequenceTaggingFunction(index));
         }
-    }
+        return taggedTestSpec;
+    };
+};
 
-    return completeTests;
+gpii.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index) {
+    return function (rawTestSequence) {
+        var taggedTestSequence = fluid.copy(rawTestSequence);
+        if (taggedTestSequence.name) {
+            taggedTestSequence.name += " (iteration #" + index + ")";
+        }
+        return taggedTestSequence;
+    };
+};
+
+/*
+
+    Take our tests and make sure that:
+
+    1. They each have our "start" and "end" sequences appended.
+    2. They are run options.iterations times.
+    3. Each iteration is tagged with the iteration number, so that we can tell where we are in the overall pass.
+
+ */
+gpii.test.mail.caseholder.cloneTestSequences = function (that) {
+    var generatedTests = [];
+    for (var a = 1; a < that.options.iterations + 1; a++) {
+        var rawIterationTests = gpii.express.tests.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
+        var taggedIterationTests = rawIterationTests.map(gpii.test.mail.caseholder.generateTestTaggingFunction(a));
+        generatedTests = generatedTests.concat(taggedIterationTests);
+    }
+    return generatedTests;
 };
 
 fluid.defaults("gpii.test.mail.caseholder", {
-    gradeNames: ["fluid.test.testCaseHolder"],
-    mergePolicy: {
-        rawModules:    "noexpand",
-        sequenceStart: "noexpand"
-    },
+    gradeNames: ["gpii.express.tests.caseHolder.base"],
+    iterations : 1,
     sequenceStart: [
-        { // This sequence point is required because of a QUnit bug - it defers the start of sequence by 13ms "to avoid any current callbacks" in its words
+        {
             func: "{testEnvironment}.events.constructServer.fire"
         },
         {
@@ -63,7 +88,7 @@ fluid.defaults("gpii.test.mail.caseholder", {
         }
     ],
     moduleSource: {
-        funcName: "gpii.test.mail.caseholder.addRequiredSequences",
-        args:     ["{that}.options.sequenceStart", "{that}.options.rawModules"]
+        funcName: "gpii.test.mail.caseholder.cloneTestSequences",
+        args:     ["{that}", "{that}.options.rawModules"]
     }
 });

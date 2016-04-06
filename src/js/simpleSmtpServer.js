@@ -19,11 +19,11 @@ gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, ch
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
-    connection.saveStream.end();
+    connection.saveStream.end(function () {
+        that.events.onMessageReceived.fire(that, connection);
 
-    that.events.onMessageReceived.fire(that, connection);
-
-    callback(null, that.options.config.queueId);
+        callback(null, that.options.config.queueId);
+    });
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {

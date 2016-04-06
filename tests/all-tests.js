@@ -5,14 +5,12 @@ var fluid = require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 fluid.registerNamespace("gpii.test.mail.tests.all");
 
-fluid.setLogging(true);
-
 require("../index.js");
-require("./lib/caseholder");
-require("./lib/environment");
+gpii.mail.test.loadTestingSupport();
 
 fluid.defaults("gpii.test.mail.tests.all.caseholder", {
     gradeNames: ["gpii.test.mail.caseholder"],
+    iterations: 100,
     messages: {
         basic: {
             from:    "sender@localhost",
