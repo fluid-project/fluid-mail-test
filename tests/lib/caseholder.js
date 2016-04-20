@@ -65,10 +65,10 @@ gpii.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index)
     3. Each iteration is tagged with the iteration number, so that we can tell where we are in the overall pass.
 
  */
-gpii.test.mail.caseholder.cloneTestSequences = function (that, rawTests) {
+gpii.test.mail.caseholder.cloneTestSequences = function (that) {
     var generatedTests = [];
     for (var a = 1; a < that.options.iterations + 1; a++) {
-        var rawIterationTests = gpii.express.tests.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
+        var rawIterationTests = gpii.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
         var taggedIterationTests = rawIterationTests.map(gpii.test.mail.caseholder.generateTestTaggingFunction(a));
         generatedTests = generatedTests.concat(taggedIterationTests);
     }
@@ -76,7 +76,7 @@ gpii.test.mail.caseholder.cloneTestSequences = function (that, rawTests) {
 };
 
 fluid.defaults("gpii.test.mail.caseholder", {
-    gradeNames: ["gpii.express.tests.caseHolder.base"],
+    gradeNames: ["gpii.test.express.caseHolder.base"],
     iterations : 1,
     sequenceStart: [
         {

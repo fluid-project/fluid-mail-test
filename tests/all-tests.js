@@ -21,6 +21,7 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
     },
     rawModules: [
         {
+            name: "Mail server tests...",
             tests: [
                 {
                     name: "Testing the correct transmission of a mail message by the mailer...",

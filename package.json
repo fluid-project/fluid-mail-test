@@ -1,6 +1,6 @@
 {
   "name": "gpii-mail-test",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A fluid component that provides a SMTP server and client that can be used for testing purposes.",
   "author": "Tony Atkins <tony@raisingthefloor.org>",
   "license": "BSD-3-Clause",
@@ -13,13 +13,13 @@
     "url": "https://github.com/GPII/gpii-mail-test"
   },
   "dependencies": {
-    "infusion": "2.0.0-dev.20151211T025229Z.eabb4fc",
+    "infusion": "2.0.0-dev.20160309T145652Z.9f515ec",
     "nodemailer": "1.3.0",
     "nodemailer-smtp-transport": "0.1.13",
     "simplesmtp": "0.3.34"
   },
   "devDependencies": {
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#59e852d74d5a198bb96190d47073b97fff224fd9",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#30135c97b908acfd83cba2844588ffb1ff18d9a4",
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.0",
     "grunt-jsonlint": "1.0.4",
