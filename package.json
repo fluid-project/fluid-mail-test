@@ -13,17 +13,17 @@
     "url": "https://github.com/GPII/gpii-mail-test"
   },
   "dependencies": {
-    "infusion": "git://github.com/amb26/infusion.git#81ef49cdc0e78a96549c5195d9ffd42604087096",
+    "infusion": "git://github.com/amb26/infusion.git#3c67d2d3d2fafbe6c21a6e9828be438eebe67299",
     "nodemailer": "1.3.0",
     "nodemailer-smtp-transport": "0.1.13",
     "simplesmtp": "0.3.34"
   },
   "devDependencies": {
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#1c821135fb89596b1cf5bbd398bb2ad50e874d79",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#d3a21a9247a30a9bd9d0e8a3b6ffa9152a572b03",
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.0",
     "grunt-jsonlint": "1.0.4",
-    "kettle": "git://github.com/amb26/kettle.git#2517cc1d9d047d58aef70db48d1580da718ffc16",
+    "kettle": "git://github.com/amb26/kettle.git#d808f3d5e326265aab9aaa1014703d75fa8ef0d0",
     "node-jqunit": "~1.1.3"
   }
 }
