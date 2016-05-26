@@ -19,7 +19,7 @@
     "simplesmtp": "0.3.34"
   },
   "devDependencies": {
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#31a94c823acb7b047ec5b6225d0cc3a9f7a91066",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#84279ed065b0429eb71b7f13a17916353362263a",
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.0",
     "grunt-jsonlint": "1.0.4",
