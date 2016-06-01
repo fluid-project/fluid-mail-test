@@ -6,7 +6,7 @@
   "license": "BSD-3-Clause",
   "main": "",
   "scripts": {
-    "test": "node tests/all-tests.js"
+    "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.0",
     "grunt-jsonlint": "1.0.4",
+    "istanbul": "0.4.3",
     "kettle": "git://github.com/amb26/kettle.git#d808f3d5e326265aab9aaa1014703d75fa8ef0d0",
     "node-jqunit": "~1.1.3"
   }
