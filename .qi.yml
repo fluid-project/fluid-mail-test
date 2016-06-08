@@ -16,4 +16,4 @@ setup:
   - npm install
 
 commands:
-  - npm test
+  - TMPDIR=/tmp npm test
