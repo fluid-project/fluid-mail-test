@@ -1,7 +1,7 @@
 {
   "name": "gpii-mail-test",
   "version": "1.0.0",
-  "description": "A fluid component that provides a SMTP server and client that can be used for testing purposes.",
+  "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
   "author": "Tony Atkins <tony@raisingthefloor.org>",
   "license": "BSD-3-Clause",
   "main": "",
@@ -19,9 +19,10 @@
     "simplesmtp": "0.3.34"
   },
   "devDependencies": {
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#84279ed065b0429eb71b7f13a17916353362263a",
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.9.0",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#52b1701d46868eeb3943d6d85bba09eba47938ce",
+    "eslint": "2.11.1",
+    "grunt": "1.0.1",
+    "grunt-eslint": "18.1.0",
     "grunt-jsonlint": "1.0.4",
     "istanbul": "0.4.3",
     "kettle": "git://github.com/amb26/kettle.git#d808f3d5e326265aab9aaa1014703d75fa8ef0d0",

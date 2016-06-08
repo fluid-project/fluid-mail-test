@@ -1,4 +1,5 @@
 // A simple file to launch an instance of the mail server for debugging and manual testing.
+"use strict";
 var fluid = require("infusion");
 fluid.setLogging(true);
 
