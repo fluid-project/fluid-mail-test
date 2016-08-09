@@ -21,8 +21,8 @@
   "devDependencies": {
     "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#2f224862730bca57fa1f036f24f26e1d43748419",
     "eslint": "3.2.2",
+    "fluid-grunt-eslint": "18.1.1",
     "grunt": "1.0.1",
-    "grunt-eslint": "19.0.0",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.4",
     "kettle": "1.1.0",
