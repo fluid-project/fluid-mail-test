@@ -1,0 +1,20 @@
+# A configuration file for our Quality Infrastructure builds: https://wiki.gpii.net/w/Quality_Infrastructure
+app_name: gpii-mail-test
+
+git_repository: https://github.com/the-t-in-rtf/gpii-mail-test.git
+
+email: tony@raisingthefloor.org
+
+env_runtime: linux
+
+app_start_service: false
+
+software_stack: nodejs
+
+software_stack_version: 4.3.1
+
+setup:
+  - npm install
+
+commands:
+  - TMPDIR=/tmp npm test

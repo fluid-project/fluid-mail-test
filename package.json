@@ -1,28 +1,31 @@
 {
   "name": "gpii-mail-test",
-  "version": "0.0.0",
-  "description": "A fluid component that provides a SMTP server and client that can be used for testing purposes.",
+  "version": "1.0.0",
+  "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
   "author": "Tony Atkins <tony@raisingthefloor.org>",
   "license": "BSD-3-Clause",
   "main": "",
   "scripts": {
-    "test": "node tests/all-tests.js"
+    "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/GPII/gpii-mail-test"
   },
   "dependencies": {
-    "infusion": "2.0.0-dev.20151211T025229Z.eabb4fc",
-    "nodemailer": "1.3.0",
-    "nodemailer-smtp-transport": "0.1.13",
-    "simplesmtp": "^0.3.34"
+    "infusion": "2.0.0-dev.20160519T222603Z.754d2c6",
+    "nodemailer": "2.5.0",
+    "nodemailer-smtp-transport": "2.6.0",
+    "simplesmtp": "0.3.35"
   },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.9.0",
-    "grunt-jsonlint": "1.0.4",
-    "kettle": "git://github.com/amb26/kettle.git#2517cc1d9d047d58aef70db48d1580da718ffc16",
-    "node-jqunit": "~1.1.3"
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#baa1558d22ee7abcb6d6b6410af7cc95693f1b80",
+    "eslint": "3.3.1",
+    "fluid-grunt-eslint": "18.1.2",
+    "grunt": "1.0.1",
+    "grunt-jsonlint": "1.1.0",
+    "istanbul": "0.4.5",
+    "kettle": "1.1.0",
+    "node-jqunit": "1.1.4"
   }
 }

@@ -81,4 +81,3 @@ fluid.defaults("gpii.test.mail.mailer", {
         }
     }
 });
-
