@@ -13,19 +13,44 @@
     "url": "https://github.com/GPII/gpii-mail-test"
   },
   "dependencies": {
-    "infusion": "2.0.0-dev.20160519T222603Z.754d2c6",
-    "nodemailer": "2.5.0",
-    "nodemailer-smtp-transport": "2.6.0",
+    "infusion": "2.0.0-dev.20161027T155641Z.0bcd507",
+    "nodemailer": "^2.6.4",
+    "nodemailer-smtp-transport": "^2.7.2",
     "simplesmtp": "0.3.35"
   },
   "devDependencies": {
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#baa1558d22ee7abcb6d6b6410af7cc95693f1b80",
-    "eslint": "3.3.1",
+    "eslint": "3.10.2",
     "fluid-grunt-eslint": "18.1.2",
+    "gpii-express": "1.0.0",
     "grunt": "1.0.1",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.5",
-    "kettle": "1.1.0",
+    "kettle": "1.2.2",
     "node-jqunit": "1.1.4"
+  },
+  "resolutions": {
+    "infusion": "2.0.0-dev.20161027T155641Z.0bcd507",
+    "chalk": "1.1.3",
+    "debug": "2.3.3",
+    "espree": "3.3.2",
+    "estraverse": "4.2.0",
+    "file-entry-cache": "2.0.0",
+    "glob": "7.0.6",
+    "lodash": "4.17.2",
+    "shelljs": "0.7.5",
+    "strip-bom": "3.0.0",
+    "strip-json-comments": "2.0.1",
+    "supports-color": "3.1.2",
+    "isarray": "1.0.0",
+    "string-width": "2.0.0",
+    "minimist": "1.2.0",
+    "wordwrap": "1.0.0",
+    "express-session": "1.14.2",
+    "iconv-lite": "0.4.15",
+    "path-to-regexp": "1.5.3",
+    "camelcase": "2.1.1",
+    "async": "1.5.2",
+    "jsonlint": "1.6.2",
+    "source-map": "0.5.6"
   }
 }
