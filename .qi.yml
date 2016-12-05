@@ -1,20 +1,18 @@
 # A configuration file for our Quality Infrastructure builds: https://wiki.gpii.net/w/Quality_Infrastructure
-app_name: gpii-mail-test
-
-git_repository: https://github.com/the-t-in-rtf/gpii-mail-test.git
-
 email: tony@raisingthefloor.org
+env_runtime: linux-desktop
 
-env_runtime: linux
-
-app_start_service: false
-
-software_stack: nodejs
-
-software_stack_version: lts
-
-setup:
-  - npm install
-
-commands:
-  - TMPDIR=/tmp npm test
+apps:
+  - app_name: gpii-mail-test
+    git_repository: https://github.com/the-t-in-rtf/gpii-mail-test.git
+    git_branch: GPII-1759
+    software_stack: nodejs
+    software_stack_version: lts
+    folder:
+      dest: /app/gpii-mail-test
+    run_in: fedora
+    deploy: false
+    setup:
+      - yarn install
+    test_cmds:
+      - yarn test
