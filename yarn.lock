@@ -432,7 +432,7 @@ eslint-config-fluid@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-fluid/-/eslint-config-fluid-1.0.0.tgz#fd1fe8c14439c6afc009b31c0665be0d574d2892"
 
-eslint@^3.11.1:
+eslint@3.11.1:
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.11.1.tgz#408be581041385cba947cd8d1cd2227782b55dbf"
   dependencies:
@@ -719,16 +719,16 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gpii-express@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/gpii-express/-/gpii-express-1.0.1.tgz#ad2b3e110d56867e171c2323362caaa378163095"
+gpii-express@1.0.1-dev.20170106T131203Z.a048e61:
+  version "1.0.1-dev.20170106T131203Z.a048e61"
+  resolved "https://registry.yarnpkg.com/gpii-express/-/gpii-express-1.0.1-dev.20170106T131203Z.a048e61.tgz#5ce9b3c8f996bc3da9f4f0e6afb1fc30338eabdc"
   dependencies:
     body-parser "1.15.2"
     cookie-parser "1.4.3"
     express "4.14.0"
     express-session "1.14.2"
-    infusion "2.0.0-dev.20161027T155641Z.0bcd507"
-    resolve "1.1.7"
+    infusion "2.0.0-dev.20161219T170555Z.5778f7e"
+    resolve "1.2.0"
 
 graceful-fs@^4.1.2:
   version "4.1.11"
@@ -876,15 +876,21 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-infusion@2.0.0-dev.20151130T180545Z.18ee3f8, infusion@2.0.0-dev.20160519T222603Z.754d2c6, infusion@2.0.0-dev.20161027T155641Z.0bcd507:
+infusion@2.0.0-dev.20151130T180545Z.18ee3f8:
   version "2.0.0-dev.20161027T155641Z.0bcd507"
   resolved "https://registry.yarnpkg.com/infusion/-/infusion-2.0.0-dev.20161027T155641Z.0bcd507.tgz#207e474cdd3e326f99c262560849de9cd6c8dfa9"
   dependencies:
     fluid-resolve "1.2.0"
 
-infusion@^2.0.0-dev.20161124T191742Z.17a345b:
+infusion@2.0.0-dev.20161124T191742Z.17a345b:
   version "2.0.0-dev.20161124T191742Z.17a345b"
   resolved "https://registry.yarnpkg.com/infusion/-/infusion-2.0.0-dev.20161124T191742Z.17a345b.tgz#8266bc688d1a0afb399aeced06bc3b46efa81b5b"
+  dependencies:
+    fluid-resolve "1.2.0"
+
+infusion@2.0.0-dev.20161219T170555Z.5778f7e:
+  version "2.0.0-dev.20161219T170555Z.5778f7e"
+  resolved "https://registry.yarnpkg.com/infusion/-/infusion-2.0.0-dev.20161219T170555Z.5778f7e.tgz#3568b448d1e6c0a491e8ad45d6c592de3b7fd4bf"
   dependencies:
     fluid-resolve "1.2.0"
 
@@ -1050,19 +1056,19 @@ jsonpointer@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.0.tgz#6661e161d2fc445f19f98430231343722e1fcbd5"
 
-kettle@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/kettle/-/kettle-1.2.2.tgz#169cf6948da181170e56ae7c33b36f77ef7eb339"
+kettle@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/kettle/-/kettle-1.3.0.tgz#ac3e63d10f0b31ac6edf4abfd4ed6ba78e96a541"
   dependencies:
     body-parser "1.15.2"
     cookie-parser "1.4.3"
     express "4.14.0"
     express-session "1.14.0"
-    infusion "2.0.0-dev.20160519T222603Z.754d2c6"
+    fluid-resolve "1.2.0"
+    infusion "2.0.0-dev.20161219T170555Z.5778f7e"
     json5 "0.5.0"
     jsonlint "1.6.0"
     path-to-regexp "1.5.3"
-    resolve "1.1.6"
     serve-static "1.11.1"
     ws "1.1.1"
 
@@ -1510,13 +1516,13 @@ resolve-from@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
 
-resolve@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.6.tgz#d3492ad054ca800f5befa612e61beac1eec98f8f"
-
-resolve@1.1.7, resolve@1.1.x, resolve@^1.1.6, resolve@~1.1.0:
+resolve@1.1.x, resolve@^1.1.6, resolve@~1.1.0:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
+
+resolve@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.2.0.tgz#9589c3f2f6149d1417a40becc1663db6ec6bc26c"
 
 restore-cursor@^1.0.1:
   version "1.0.1"
