@@ -1,32 +1,31 @@
 {
-  "name": "gpii-mail-test",
-  "version": "1.0.4",
-  "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
-  "author": "Tony Atkins <tony@raisingthefloor.org>",
-  "license": "BSD-3-Clause",
-  "main": "",
-  "scripts": {
-    "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/GPII/gpii-mail-test"
-  },
-  "dependencies": {
-    "infusion": "3.0.0-dev.20170724T165035Z.eee50c1",
-    "nodemailer": "4.0.1",
-    "nodemailer-smtp-transport": "2.7.4",
-    "simplesmtp": "0.3.35"
-  },
-  "devDependencies": {
-    "eslint": "4.3.0",
-    "eslint-config-fluid": "1.1.0",
-    "fluid-grunt-eslint": "18.1.2",
-    "gpii-express": "1.0.9",
-    "grunt": "1.0.1",
-    "grunt-jsonlint": "1.1.0",
-    "istanbul": "0.4.5",
-    "kettle": "1.6.4",
-    "node-jqunit": "1.1.6"
-  }
+    "name": "gpii-mail-test",
+    "version": "1.0.4",
+    "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
+    "author": "Tony Atkins <tony@raisingthefloor.org>",
+    "license": "BSD-3-Clause",
+    "main": "",
+    "scripts": {
+        "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GPII/gpii-mail-test"
+    },
+    "dependencies": {
+        "infusion": "3.0.0-dev.20180720T113347Z.272cf70",
+        "nodemailer": "4.6.7",
+        "nodemailer-smtp-transport": "2.7.4",
+        "simplesmtp": "0.3.35"
+    },
+    "devDependencies": {
+        "eslint": "5.2.0",
+        "eslint-config-fluid": "1.3.0",
+        "gpii-express": "1.0.14",
+        "gpii-grunt-lint-all": "1.0.1-dev.20180731T094032Z.112cde7",
+        "grunt": "1.0.3",
+        "istanbul": "0.4.5",
+        "kettle": "1.7.3",
+        "node-jqunit": "1.1.8"
+    }
 }
