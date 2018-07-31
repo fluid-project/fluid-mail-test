@@ -1,6 +1,6 @@
 {
     "name": "gpii-mail-test",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
     "author": "Tony Atkins <tony@raisingthefloor.org>",
     "license": "BSD-3-Clause",
