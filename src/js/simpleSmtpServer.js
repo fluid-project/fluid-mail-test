@@ -27,7 +27,9 @@ gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connectio
 };
 
 gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
-    that.simplesmtp = simplesmtp.createServer(that.options.config);
+    // Give simpleSMTP its own copy of our options to avoid issues with attempting to modify our options.
+    var serverOptions = fluid.copy(that.options.config);
+    that.simplesmtp = simplesmtp.createServer(serverOptions);
 
     that.simplesmtp.on("startData", that.handleStartData);
     that.simplesmtp.on("data",      that.handleData);
