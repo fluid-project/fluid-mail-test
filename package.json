@@ -1,7 +1,7 @@
 {
-    "name": "gpii-mail-test",
+    "name": "fluid-mail-test",
     "version": "1.0.7",
-    "description": "A fluid component that provides an SMTP server and client that can be used for testing purposes.",
+    "description": "A Fluid component that provides an SMTP server and client that can be used for testing purposes.",
     "author": "Tony Atkins <tony@raisingthefloor.org>",
     "license": "BSD-3-Clause",
     "main": "",
@@ -10,20 +10,20 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/GPII/gpii-mail-test"
+        "url": "https://github.com/fluid-project/fluid-mail-test"
     },
     "dependencies": {
-        "infusion": "3.0.0-dev.20200528T154535Z.9cd9261.FLUID-6145",
-        "nodemailer": "6.4.8",
+        "infusion": "3.0.0-dev.20200604T195400Z.dddc6a2.FLUID-6145",
+        "nodemailer": "6.4.10",
         "nodemailer-smtp-transport": "2.7.4",
         "simplesmtp": "0.3.35"
     },
     "devDependencies": {
-        "eslint": "7.1.0",
+        "eslint": "7.4.0",
         "eslint-config-fluid": "1.4.0",
-        "gpii-express": "1.0.15",
-        "gpii-grunt-lint-all": "1.0.7",
-        "grunt": "1.1.0",
+        "fluid-express": "1.0.16",
+        "fluid-grunt-lint-all": "1.0.8",
+        "grunt": "1.2.1",
         "kettle": "1.12.0",
         "node-jqunit": "1.1.8",
         "nyc": "15.0.1"

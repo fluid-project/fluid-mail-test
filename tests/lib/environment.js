@@ -10,7 +10,7 @@
 "use strict";
 var fluid        = require("infusion");
 
-fluid.defaults("gpii.test.mail.environment", {
+fluid.defaults("fluid.test.mail.environment", {
     gradeNames: ["fluid.test.testEnvironment"],
     port:       4025,
     events: {
@@ -22,7 +22,7 @@ fluid.defaults("gpii.test.mail.environment", {
     components: {
         smtpServer: {
             createOnEvent: "constructServer",
-            type: "gpii.test.mail.smtp",
+            type: "fluid.test.mail.smtp",
             options: {
                 port: "{testEnvironment}.options.port",
                 listeners: {

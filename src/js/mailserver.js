@@ -9,11 +9,11 @@
 // For specific examples, look at the tests in this project.
 "use strict";
 var fluid = require("infusion");
-fluid.registerNamespace("gpii.test.mail.smtp");
+fluid.registerNamespace("fluid.test.mail.smtp");
 
 var os            = require("os");
 
-fluid.defaults("gpii.test.mail.smtp", {
+fluid.defaults("fluid.test.mail.smtp", {
     gradeNames: ["fluid.component"],
     port: 4025,
     simpleSmtp: {
@@ -27,17 +27,17 @@ fluid.defaults("gpii.test.mail.smtp", {
     },
     components: {
         mailServer: {
-            type: "gpii.test.mail.smtp.simpleSmtpServer",
+            type: "fluid.test.mail.smtp.simpleSmtpServer",
             options: {
                 listeners: {
                     onMessageReceived: {
-                        func: "{gpii.test.mail.smtp}.events.onMessageReceived.fire"
+                        func: "{fluid.test.mail.smtp}.events.onMessageReceived.fire"
                     },
                     onReady: {
-                        func: "{gpii.test.mail.smtp}.events.onReady.fire"
+                        func: "{fluid.test.mail.smtp}.events.onReady.fire"
                     },
                     onError: {
-                        func: "{gpii.test.mail.smtp}.events.onError.fire"
+                        func: "{fluid.test.mail.smtp}.events.onError.fire"
                     }
                 }
             }

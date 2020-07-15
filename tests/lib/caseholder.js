@@ -2,17 +2,16 @@
 "use strict";
 
 var fluid = require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
-fluid.registerNamespace("gpii.test.mail.caseholder");
+fluid.registerNamespace("fluid.test.mail.caseholder");
 
 var jqUnit = require("node-jqunit");
 var fs     = require("fs");
 
-// We use the "sequence wiring" infrastructure from `gpii-express`.
-require("gpii-express");
-gpii.express.loadTestingSupport();
+// We use the "sequence wiring" infrastructure from `fluid-express`.
+require("fluid-express");
+fluid.express.loadTestingSupport();
 
-gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
+fluid.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
     jqUnit.assertTrue("The message should have been accepted...", info.accepted.length > 0);
     jqUnit.assertFalse("The message should not been rejected...", info.rejected.length > 0);
 
@@ -22,7 +21,7 @@ gpii.test.mail.caseholder.verifyMailInfo = function (that, info, expected) {
     jqUnit.assertEquals("The recipient should be correct", expected.to, info.envelope.to[0]);
 };
 
-gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) {
+fluid.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) {
     var messageFile = testEnvironment.smtpServer.mailServer.currentMessageFile;
     var messageBody = fs.readFileSync(messageFile, "utf8");
 
@@ -35,18 +34,18 @@ gpii.test.mail.caseholder.verifyMailBody = function (testEnvironment, expected) 
     });
 };
 
-fluid.registerNamespace("gpii.test.mail.caseholder");
-gpii.test.mail.caseholder.generateTestTaggingFunction = function (index) {
+fluid.registerNamespace("fluid.test.mail.caseholder");
+fluid.test.mail.caseholder.generateTestTaggingFunction = function (index) {
     return function (rawTestSpec) {
         var taggedTestSpec = fluid.copy(rawTestSpec);
         if (taggedTestSpec.tests) {
-            taggedTestSpec.tests = taggedTestSpec.tests.map(gpii.test.mail.caseholder.generateTestSequenceTaggingFunction(index));
+            taggedTestSpec.tests = taggedTestSpec.tests.map(fluid.test.mail.caseholder.generateTestSequenceTaggingFunction(index));
         }
         return taggedTestSpec;
     };
 };
 
-gpii.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index) {
+fluid.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index) {
     return function (rawTestSequence) {
         var taggedTestSequence = fluid.copy(rawTestSequence);
         if (taggedTestSequence.name) {
@@ -65,18 +64,18 @@ gpii.test.mail.caseholder.generateTestSequenceTaggingFunction = function (index)
     3. Each iteration is tagged with the iteration number, so that we can tell where we are in the overall pass.
 
  */
-gpii.test.mail.caseholder.cloneTestSequences = function (that) {
+fluid.test.mail.caseholder.cloneTestSequences = function (that) {
     var generatedTests = [];
     for (var a = 1; a < that.options.iterations + 1; a++) {
-        var rawIterationTests = gpii.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
-        var taggedIterationTests = rawIterationTests.map(gpii.test.mail.caseholder.generateTestTaggingFunction(a));
+        var rawIterationTests = fluid.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
+        var taggedIterationTests = rawIterationTests.map(fluid.test.mail.caseholder.generateTestTaggingFunction(a));
         generatedTests = generatedTests.concat(taggedIterationTests);
     }
     return generatedTests;
 };
 
-fluid.defaults("gpii.test.mail.caseholder", {
-    gradeNames: ["gpii.test.express.caseHolder.base"],
+fluid.defaults("fluid.test.mail.caseholder", {
+    gradeNames: ["fluid.test.express.caseHolder.base"],
     iterations : 1,
     sequenceStart: [
         {
@@ -88,7 +87,7 @@ fluid.defaults("gpii.test.mail.caseholder", {
         }
     ],
     moduleSource: {
-        funcName: "gpii.test.mail.caseholder.cloneTestSequences",
+        funcName: "fluid.test.mail.caseholder.cloneTestSequences",
         args:     ["{that}", "{that}.options.rawModules"]
     }
 });
