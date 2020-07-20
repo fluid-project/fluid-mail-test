@@ -3,11 +3,9 @@
 var fluid = require("infusion");
 fluid.setLogging(true);
 
-var gpii  = fluid.registerNamespace("gpii");
-
 require("../index.js");
 
-gpii.test.mail.smtp({
+fluid.test.mail.smtp({
     port: 4425,
     listeners: {
         "onMessageReceived.log": {

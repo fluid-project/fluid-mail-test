@@ -1,15 +1,14 @@
-// Tests for the `gpii-mail-test` server, which allows receiving and inspection of outgoing messages.
+// Tests for the `fluid-mail-test` server, which allows receiving and inspection of outgoing messages.
 //
 "use strict";
 var fluid = require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
-fluid.registerNamespace("gpii.test.mail.tests.all");
+fluid.registerNamespace("fluid.test.mail.tests.all");
 
 require("../index.js");
-gpii.mail.test.loadTestingSupport();
+fluid.mail.test.loadTestingSupport();
 
-fluid.defaults("gpii.test.mail.tests.all.caseholder", {
-    gradeNames: ["gpii.test.mail.caseholder"],
+fluid.defaults("fluid.test.mail.tests.all.caseholder", {
+    gradeNames: ["fluid.test.mail.caseholder"],
     iterations: 100,
     messages: {
         basic: {
@@ -34,7 +33,7 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
                         },
                         // listen for receipt and check validity of message info.
                         {
-                            listener: "gpii.test.mail.caseholder.verifyMailInfo",
+                            listener: "fluid.test.mail.caseholder.verifyMailInfo",
                             event: "{mailer}.events.onSuccess",
                             args: ["{mailer}", "{arguments}.0", "{that}.options.messages.basic", "{testEnvironment}.smtpServer.currentMessageFile"]
                         }
@@ -51,7 +50,7 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
                         },
                         // listen for the mail server to process the message and check the message body
                         {
-                            listener: "gpii.test.mail.caseholder.verifyMailBody",
+                            listener: "fluid.test.mail.caseholder.verifyMailBody",
                             event: "{testEnvironment}.smtpServer.events.onMessageReceived",
                             args: ["{testEnvironment}", "{that}.options.messages.basic"]
                         },
@@ -68,7 +67,7 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
     ],
     components: {
         mailer: {
-            type: "gpii.test.mail.mailer",
+            type: "fluid.test.mail.mailer",
             options: {
                 smtpPort: "{testEnvironment}.options.port"
             }
@@ -76,11 +75,11 @@ fluid.defaults("gpii.test.mail.tests.all.caseholder", {
     }
 });
 
-gpii.test.mail.environment({
+fluid.test.mail.environment({
     port: 4425,
     components: {
         testCaseHolder: {
-            type: "gpii.test.mail.tests.all.caseholder"
+            type: "fluid.test.mail.tests.all.caseholder"
         }
     }
 });

@@ -1,24 +1,23 @@
 // A module to wire in simplesmtp to handle incoming messages.
 "use strict";
 var fluid = require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
-fluid.registerNamespace("gpii.test.mail.smtp.simpleSmtpServer");
+fluid.registerNamespace("fluid.test.mail.smtp.simpleSmtpServer");
 
 var simplesmtp = require("simplesmtp");
 
 var fs         = require("fs");
 
-gpii.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
+fluid.test.mail.smtp.simpleSmtpServer.handleStartData = function (that, connection) {
     var timestamp = (new Date()).getTime();
     that.currentMessageFile = that.options.config.outputDir + "/message-" + timestamp + ".txt";
     connection.saveStream = fs.createWriteStream(that.currentMessageFile);
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
+fluid.test.mail.smtp.simpleSmtpServer.handleData = function (that, connection, chunk) {
     connection.saveStream.write(chunk);
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
+fluid.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connection, callback) {
     connection.saveStream.end(function () {
         that.events.onMessageReceived.fire(that, connection);
 
@@ -26,7 +25,7 @@ gpii.test.mail.smtp.simpleSmtpServer.handleDataReady = function (that, connectio
     });
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
+fluid.test.mail.smtp.simpleSmtpServer.init = function (that) {
     // Give simpleSMTP its own copy of our options to avoid issues with attempting to modify our options.
     var serverOptions = fluid.copy(that.options.config);
     that.simplesmtp = simplesmtp.createServer(serverOptions);
@@ -41,7 +40,7 @@ gpii.test.mail.smtp.simpleSmtpServer.init = function (that) {
     });
 };
 
-gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
+fluid.test.mail.smtp.simpleSmtpServer.stop = function (that) {
     try {
         that.simplesmtp.end(function () {
             fluid.log("Stopped mail server...");
@@ -53,23 +52,23 @@ gpii.test.mail.smtp.simpleSmtpServer.stop = function (that) {
 };
 
 
-fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
+fluid.defaults("fluid.test.mail.smtp.simpleSmtpServer", {
     gradeNames: ["fluid.modelComponent"],
-    "config": "{gpii.test.mail.smtp}.options.simpleSmtp",
+    "config": "{fluid.test.mail.smtp}.options.simpleSmtp",
     "members": {
         "currentMessageFile": null
     },
     "invokers": {
         "handleStartData": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleStartData",
+            "funcName": "fluid.test.mail.smtp.simpleSmtpServer.handleStartData",
             "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
         "handleData": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleData",
+            "funcName": "fluid.test.mail.smtp.simpleSmtpServer.handleData",
             "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         },
         "handleDataReady": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.handleDataReady",
+            "funcName": "fluid.test.mail.smtp.simpleSmtpServer.handleDataReady",
             "args": ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
         }
     },
@@ -80,11 +79,11 @@ fluid.defaults("gpii.test.mail.smtp.simpleSmtpServer", {
     },
     "listeners": {
         "onCreate.init": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.init",
+            "funcName": "fluid.test.mail.smtp.simpleSmtpServer.init",
             "args": ["{that}"]
         },
         "onDestroy.stop": {
-            "funcName": "gpii.test.mail.smtp.simpleSmtpServer.stop",
+            "funcName": "fluid.test.mail.smtp.simpleSmtpServer.stop",
             "args": ["{that}"]
         },
         "onReady.log": {

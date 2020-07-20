@@ -5,7 +5,7 @@ based on [`nodemailer-smtp-transport`](https://github.com/nodemailer/nodemailer-
 
 ## Global Functions
 
-### `gpii.mail.test.loadTestingSupport()`
+### `fluid.mail.test.loadTestingSupport()`
 
 * Returns: Nothing.
 
@@ -14,7 +14,7 @@ our test fixtures.
 
 ## Components
 
-### `gpii.test.mail.smtp`
+### `fluid.test.mail.smtp`
 
 A test mail server that allows you to examine the contents of outgoing mail messages from within
 [Fluid IoC tests](http://docs.fluidproject.org/infusion/development/IoCTestingFramework.html).  This allows you to do
@@ -28,7 +28,7 @@ tests you will typically:
 
 1. Send mail.
 2. Listen for the `onMessageReceived` event.
-3. Examine the contents of `{gpii.test.mail.smtp}.currentMessageFile`.
+3. Examine the contents of `{fluid.test.mail.smtp}.currentMessageFile`.
 
 Note that the filename for the cache file is generated using a timestamp, and is located in `os.tmpdir()` by default.
 
@@ -39,7 +39,7 @@ Note that the filename for the cache file is generated using a timestamp, and is
 | port       | `{Number}` | The port number to listen on.  Defaults to `4025`. |
 | simpleSmtp | `{Object}` | The configuration options to pass on to `simplesmtp.createServer`.  See [the `simplesmtp` documentation](https://github.com/andris9/simplesmtp#advanced-smtp-server) for details. |
 
-### `gpii.test.mail.mailer`
+### `fluid.test.mail.mailer`
 
 A wrapper around [`nodemailer-smtp-transport`](https://github.com/nodemailer/nodemailer-smtp-transport) that can be used
 to send test messages to an arbitrary SMTP server.
@@ -73,10 +73,10 @@ the message fails. Here is an example of typical `mailOptions`:
 
 Note that the `to` and `cc` elements can also be passed an array of email addresses.
 
-### `gpii.test.mail.environment`
+### `fluid.test.mail.environment`
 
-A `fluid.test.testEnvironment` that constructs an instance of `gpii.test.mail.smtp` when its `constructServer` event is
-fired.  Intended for use with something like the `gpii.test.mail.caseholder` caseholder (see below).
+A `fluid.test.testEnvironment` that constructs an instance of `fluid.test.mail.smtp` when its `constructServer` event is
+fired.  Intended for use with something like the `fluid.test.mail.caseholder` caseholder (see below).
 
 #### Component Options
 
@@ -84,12 +84,12 @@ fired.  Intended for use with something like the `gpii.test.mail.caseholder` cas
 | ------ | ----------- | ----------- |
 | `port` | `{Number}`  | The port the SMTP server should listen on. |
 
-### `gpii.test.mail.caseholder`
+### `fluid.test.mail.caseholder`
 
-An instance of `gpii.express.tests.caseHolder.base`, which is a case holder that allows wiring in default "first steps"
-and "last steps" for each test.  This grade includes the "startup" sequences for `gpii.test.mail.environment`, which
+An instance of `fluid.express.tests.caseHolder.base`, which is a case holder that allows wiring in default "first steps"
+and "last steps" for each test.  This grade includes the "startup" sequences for `fluid.test.mail.environment`, which
 launch the mail server, and then wait for it to finish starting up before continuing.  If you need different startup
-steps, extend `gpii.express.tests.caseHolder.base` instead.
+steps, extend `fluid.express.tests.caseHolder.base` instead.
 
 The only practical difference between this and a stock caseholder is that your tests should be stored in
 `options.rawModules` rather than `options.modules`.
