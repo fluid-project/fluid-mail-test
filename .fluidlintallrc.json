@@ -1,0 +1,9 @@
+{
+    "sources": {
+        "md":    [ "./*.md"],
+        "js":    ["./src/**/*.js", "./tests/**/*.js", "./*.js"],
+        "json":  ["src/**/*.json", "tests/**/*.json", "./*.json"],
+        "json5": [],
+        "other": ["./.*"]
+    }
+}
