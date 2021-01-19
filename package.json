@@ -22,8 +22,8 @@
     "devDependencies": {
         "eslint": "7.17.0",
         "eslint-config-fluid": "2.0.0",
-        "fluid-express": "1.0.16",
-        "fluid-lint-all": "1.0.0-dev.20210113T154306Z.b842b2c.GH-1",
+        "fluid-express": "1.0.17",
+        "fluid-lint-all": "1.0.0",
         "kettle": "2.0.0",
         "node-jqunit": "1.1.8",
         "nyc": "15.1.0"
