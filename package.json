@@ -1,6 +1,6 @@
 {
     "name": "fluid-mail-test",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A Fluid component that provides an SMTP server and client that can be used for testing purposes.",
     "author": "Tony Atkins <tony@raisingthefloor.org>",
     "license": "BSD-3-Clause",
