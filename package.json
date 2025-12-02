@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "infusion": "3.0.0-dev.20201113T153152Z.32176dcbe.FLUID-6145",
-        "nodemailer": "6.4.17",
+        "nodemailer": "7.0.11",
         "nodemailer-smtp-transport": "2.7.4",
         "simplesmtp": "0.3.35"
     },
